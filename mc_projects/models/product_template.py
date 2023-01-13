@@ -18,3 +18,11 @@ class productTemplate(models.Model):
     designation = fields.Char('Designation')
     supplier = fields.Many2one('res.partner','Supplier')
     abs_edge = fields.Char('ABS edge')
+
+    coating_below = fields.Char('Coating Below')
+    coating_top = fields.Char('Coating Top')
+    varnish_below = fields.Char('Varnish Below')
+    varnish_top = fields.Char('Varnish Top')
+    angle = fields.Char('Mitre/Angle')
+    contour_milling = fields.Char('Contour milling')
+    constructors = fields.Char('Constructor')

@@ -17,12 +17,49 @@
                     <field name="weight"/>
                     <field name="area"/>
                 </xpath>
-                <xpath expr="//page[@name='general_information']//group[@name='group_standard_price']" position="inside">
+                <xpath expr="//page[@name='general_information']//group[@name='group_standard_price']"
+                       position="inside">
                     <field name="basic_material"/>
                     <field name="surface_bottom"/>
                     <field name="surface_top"/>
                     <field name="abs_edge"/>
                     <field name="remarks"/>
+                </xpath>
+                <xpath expr="//page[@name='inventory']" position="after">
+                    <page name="Extra Fields">
+                        <group name="extra_fields">
+                            <group name="" string="Extra Fields">
+                                <label for="coating_below"/>
+                                <div class="o_row" name="">
+                                    <field name="coating_below" class="oe_inline"/>
+                                </div>
+                                <label for="coating_top"/>
+                                <div class="o_row" name="">
+                                    <field name="coating_top" class="oe_inline"/>
+                                </div>
+                                <label for="varnish_below"/>
+                                <div class="o_row" name="">
+                                    <field name="varnish_below" class="oe_inline"/>
+                                </div>
+                                <label for="varnish_top"/>
+                                <div class="o_row" name="">
+                                    <field name="varnish_top" class="oe_inline"/>
+                                </div>
+                                <label for="angle"/>
+                                <div class="o_row" name="">
+                                    <field name="angle" class="oe_inline"/>
+                                </div>
+                                <label for="contour_milling"/>
+                                <div class="o_row" name="">
+                                    <field name="contour_milling" class="oe_inline"/>
+                                </div>
+                                <label for="constructors"/>
+                                <div class="o_row" name="">
+                                    <field name="constructors" class="oe_inline"/>
+                                </div>
+                            </group>
+                        </group>
+                    </page>
                 </xpath>
             </field>
         </record>
