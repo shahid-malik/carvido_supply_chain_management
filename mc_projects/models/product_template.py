@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
+
 class productTemplate(models.Model):
     _inherit = 'product.template'
 
@@ -26,3 +27,5 @@ class productTemplate(models.Model):
     angle = fields.Char('Mitre/Angle')
     contour_milling = fields.Char('Contour milling')
     constructors = fields.Char('Constructor')
+
+
