@@ -17,7 +17,7 @@ class productTemplate(models.Model):
     surface_bottom = fields.Char('Surface bottom')
     surface_top = fields.Char('Surface top')
     designation = fields.Char('Designation')
-    supplier = fields.Many2one('res.partner','Supplier')
+    supplier = fields.Many2one('res.partner', 'Supplier')
     abs_edge = fields.Char('ABS edge')
 
     coating_below = fields.Char('Coating Below')
@@ -28,4 +28,9 @@ class productTemplate(models.Model):
     contour_milling = fields.Char('Contour milling')
     constructors = fields.Char('Constructor')
 
+    @api.model
+    def _read_group_stage_ids(self, stages, domain, order):
+        stage_ids = self.env['stage.stage'].search([])
+        return stage_ids
 
+    picking_type = fields.Many2one('stock.picking', group_expand='_read_group_stage_ids')

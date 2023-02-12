@@ -76,9 +76,16 @@ class WizardGetFile(models.TransientModel):
         quantity = float(row["Quantity"])
         if math.isnan(row['Quantity']):
             quantity = 0
-        express = str(row["Express"]) if is_nan(row["Express"]) is False else None
-        if express == 'X':
-            express = None
+        material_type = str(row["Express"]) if is_nan(row["Express"]) is False else None
+
+        # TODO note for waqas
+        # Instead fo having express field, Material type field will be used to store express or individual,
+        # I change the code, validate your changes
+
+        if material_type == 'X':
+            material_type = "individual"
+        else:
+            material_type = "express"
         product_name = str(row["Produkt ID"]) if is_nan(row["Produkt ID"]) is False else None
         product_tmpl_id = request.env['product.product'].search([('name', '=', product_name)])
         unit_price = float(row["Unit Price"])
@@ -89,7 +96,7 @@ class WizardGetFile(models.TransientModel):
                                                 'name': product_name,
                                                 'product_uom_qty': quantity,
                                                 'price_unit': unit_price,
-                                                'express': express,
+                                                'material_type': material_type,
                                                 'order_id': sale_id.id,
                                                 })
         else:
@@ -100,6 +107,6 @@ class WizardGetFile(models.TransientModel):
                                                 'name': product_name,
                                                 'product_uom_qty': quantity,
                                                 'price_unit': unit_price,
-                                                'express': express,
+                                                'material_type': material_type,
                                                 'order_id': sale_id.id,
                                                 })
