@@ -19,13 +19,15 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','stock'],
+    'depends': ['base', 'stock', 'sale', 'kanban_stock', 'vendor_product_import'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'views/sale_order.xml',
         'views/product_template.xml',
-        # 'views/templates.xml',
+        'views/stock_picking.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
