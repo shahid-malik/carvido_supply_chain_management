@@ -453,7 +453,8 @@ class WizardGetFile(models.TransientModel):
             order_lines = self.env['sale.order.line'].create({'product_id': product_tmpl_id.id,
                                                               'name': product_name,
                                                               'product_uom_qty': quantity,
-                                                              'price_unit': unit_price,
+                                                              'expected_delivery_date': expected_delivery_date,
+                                                              'price_unit': 0,
                                                               'express': express,
                                                               'order_id': sale_id.id,
                                                               })
@@ -465,7 +466,7 @@ class WizardGetFile(models.TransientModel):
             order_lines = self.env['sale.order.line'].create({'product_id': product_tmpl_id.id,
                                                               'name': product_name,
                                                               'product_uom_qty': quantity,
-                                                              'price_unit': unit_price,
+                                                              'price_unit': 0,
                                                               'express': express,
                                                               'order_id': sale_id.id,
                                                               })

@@ -5,13 +5,15 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='validity_date']" position="before">
-                <field name="batch_no"/>
+            <xpath expr="//field[@name='sale_order_template_id']" position="after">
                 <field name="expected_delivery_date"/>
                 <field name="expected_shipping_date"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="after">
-                <field name="express"/>
+<!--            <xpath expr="//field[@name='partner_shipping_id']" position="after">-->
+<!--                <field name="express"/>-->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                <field name="batch_no"/>
             </xpath>
         </field>
     </record>
