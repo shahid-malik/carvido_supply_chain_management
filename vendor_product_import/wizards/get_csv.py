@@ -96,6 +96,7 @@ class WizardGetFile(models.TransientModel):
                                                 'name': product_name,
                                                 'product_uom_qty': quantity,
                                                 'price_unit': unit_price,
+                                                'expected_delivery_date': expected_delivery_date,
                                                 'material_type': material_type,
                                                 'order_id': sale_id.id,
                                                 })
@@ -107,6 +108,7 @@ class WizardGetFile(models.TransientModel):
                                                 'name': product_name,
                                                 'product_uom_qty': quantity,
                                                 'price_unit': unit_price,
+                                                'expected_delivery_date': expected_delivery_date,
                                                 'material_type': material_type,
                                                 'order_id': sale_id.id,
                                                 })
