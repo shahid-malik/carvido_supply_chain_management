@@ -26,3 +26,5 @@ class productTemplate(models.Model):
     angle = fields.Char('Mitre/Angle')
     contour_milling = fields.Char('Contour milling')
     constructors = fields.Char('Constructor')
+
+    list_price = fields.Float('Sale Price',required=True, default=0.0)
