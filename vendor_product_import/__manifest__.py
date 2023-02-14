@@ -25,6 +25,7 @@
         'base',
         'mail',
         'product',
+        'website_sale',
         'sale',
         'stock',
     ],
