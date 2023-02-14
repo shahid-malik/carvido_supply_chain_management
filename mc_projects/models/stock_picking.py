@@ -20,4 +20,6 @@ class SaleOrderInherit(models.Model):
 
     expected_delivery_date = fields.Date('Expected Delivery Date')
     material_type = fields.Selection(MATERIAL_TYPE_SELECTION, string='Material Type')
-
+    sale_order_id = fields.Many2one(
+        'sale.order', 'Sale Order', check_company=True,
+        copy=False)

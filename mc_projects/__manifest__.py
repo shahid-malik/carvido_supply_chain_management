@@ -24,10 +24,11 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'data/sale_reminder_mail_template.xml',
+        'data/sale_email_cron.xml',
         'views/sale_order.xml',
         'views/product_template.xml',
         'views/stock_picking.xml',
-
     ],
     # only loaded in demonstration mode
     'demo': [

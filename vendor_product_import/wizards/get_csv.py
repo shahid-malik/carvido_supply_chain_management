@@ -73,6 +73,7 @@ class WizardGetFile(models.TransientModel):
                 "date_order": expected_delivery_date,
             }
             sale_id = self.env['sale.order'].create(sale_order_list)
+            sale_id.update({'name': order_no})
         quantity = float(row["Quantity"])
         if math.isnan(row['Quantity']):
             quantity = 0
@@ -92,23 +93,77 @@ class WizardGetFile(models.TransientModel):
         if product_tmpl_id:
             if math.isnan(row['Unit Price']):
                 unit_price = product_tmpl_id.base_unit_price
-            self.env['sale.order.line'].create({'product_id': product_tmpl_id.id,
-                                                'name': product_name,
-                                                'product_uom_qty': quantity,
-                                                'price_unit': unit_price,
-                                                'expected_delivery_date': expected_delivery_date,
-                                                'material_type': material_type,
-                                                'order_id': sale_id.id,
-                                                })
+            sale_line = self.env['sale.order.line'].create({'product_id': product_tmpl_id.id,
+                                                            'name': product_name,
+                                                            'product_uom_qty': quantity,
+                                                            'price_unit': 0.0,
+                                                            'expected_delivery_date': expected_delivery_date,
+                                                            'material_type': material_type,
+                                                            'order_id': sale_id.id,
+                                                            })
+            picking_type_id = self.env.ref('stock.picking_type_out')
+            dest_location_id = self.env.ref('stock.stock_location_suppliers')
+            location_id = self.env.ref('stock.stock_location_stock')
+
+            values = {
+                'partner_id': sale_id.partner_id.id,
+                'sale_id': sale_id.id,
+                'origin': sale_id.name,
+                'picking_type_id': picking_type_id.id,
+                'scheduled_date': sale_id.date_order,
+                'expected_delivery_date': expected_delivery_date,
+                'location_dest_id': dest_location_id.id,
+                'location_id': location_id.id,
+                'move_ids_without_package': [((0, 0, {
+                    'product_id': sale_line.product_id.id,
+                    'name': '',
+                    'quantity_done': 1,
+                    'product_uom_qty': sale_line.product_uom_qty,
+                    'expected_delivery_date': expected_delivery_date,
+                    'material_type': sale_line.material_type,
+                    'location_dest_id': dest_location_id.id,
+                    'location_id': location_id.id,
+                }))]
+            }
+
+            stock_pick_create = self.env['stock.picking'].create(values)
+            stock_pick_create.write({'state': 'draft'})
         else:
             product_tmpl_id = self.env['product.product'].create({'name': product_name})
             if math.isnan(row['Unit Price']):
                 unit_price = product_tmpl_id.base_unit_price
-            self.env['sale.order.line'].create({'product_id': product_tmpl_id.id,
-                                                'name': product_name,
-                                                'product_uom_qty': quantity,
-                                                'price_unit': unit_price,
-                                                'expected_delivery_date': expected_delivery_date,
-                                                'material_type': material_type,
-                                                'order_id': sale_id.id,
-                                                })
+            sale_line = self.env['sale.order.line'].create({'product_id': product_tmpl_id.id,
+                                                            'name': product_name,
+                                                            'product_uom_qty': quantity,
+                                                            'price_unit': 0.0,
+                                                            'expected_delivery_date': expected_delivery_date,
+                                                            'material_type': material_type,
+                                                            'order_id': sale_id.id,
+                                                            })
+            picking_type_id = self.env.ref('stock.picking_type_out')
+            dest_location_id = self.env.ref('stock.stock_location_suppliers')
+            location_id = self.env.ref('stock.stock_location_stock')
+
+            values = {
+                'partner_id': sale_id.partner_id.id,
+                'sale_id': sale_id.id,
+                'origin': sale_id.name,
+                'picking_type_id': picking_type_id.id,
+                'scheduled_date': sale_id.date_order,
+                'expected_delivery_date': expected_delivery_date,
+                'location_dest_id': dest_location_id.id,
+                'location_id': location_id.id,
+                'move_ids_without_package': [((0, 0, {
+                    'product_id': sale_line.product_id.id,
+                    'name': '',
+                    'quantity_done': 1,
+                    'product_uom_qty': sale_line.product_uom_qty,
+                    'expected_delivery_date': expected_delivery_date,
+                    'material_type': sale_line.material_type,
+                    'location_dest_id': dest_location_id.id,
+                    'location_id': location_id.id,
+                }))]
+            }
+
+            stock_pick_create = self.env['stock.picking'].create(values)
+            stock_pick_create.write({'state': 'draft'})
