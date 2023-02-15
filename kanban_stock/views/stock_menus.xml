@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem
+                action="stock.stock_picking_type_action"
+                id="stock.stock_picking_type_menu"
+                parent="stock.menu_stock_root" sequence="2"
+                name="Overview"/>\
+        <menuitem id="stock.menu_stock_warehouse_mgmt" name="Operations" parent="stock.menu_stock_root" sequence="0"/>\
+        <menuitem
+                id="stock.menu_reordering_rules_replenish"
+                action="stock.action_replenishment"
+                name="Replenishment" parent="stock.menu_stock_warehouse_mgmt" sequence="20"
+                groups="stock.group_stock_manager"/>\
+        <menuitem id="stock.all_picking" name="Transfers" parent="stock.menu_stock_warehouse_mgmt" sequence="5"
+                  action="stock.action_picking_tree_all" groups="stock.group_stock_manager,stock.group_stock_user"/>
+    </data>
+</odoo>
