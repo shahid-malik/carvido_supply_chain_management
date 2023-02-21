@@ -9,12 +9,18 @@
                 <field name="expected_delivery_date"/>
                 <field name="expected_shipping_date"/>
             </xpath>
-<!--            <xpath expr="//field[@name='partner_shipping_id']" position="after">-->
-<!--                <field name="express"/>-->
-<!--            </xpath>-->
+            <!--            <xpath expr="//field[@name='partner_shipping_id']" position="after">-->
+            <!--                <field name="express"/>-->
+            <!--            </xpath>-->
             <xpath expr="//field[@name='sale_order_template_id']" position="after">
                 <field name="batch_no"/>
             </xpath>
+
+            <xpath expr="//header//button[@name='action_cancel']" position="after">
+                <button name="generate_deliveries" type="object" string="Generate Delivery orders"/>
+            </xpath>
         </field>
     </record>
+
+
 </odoo>

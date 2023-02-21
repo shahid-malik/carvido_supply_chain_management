@@ -28,6 +28,7 @@
         'website_sale',
         'sale',
         'stock',
+        'sale_management',
     ],
     'data': [
         'security/ir.model.access.csv',
