@@ -24,6 +24,7 @@
     ],
     'data': [
         'views/card.xml',
+        'views/stock_menus.xml',
     ],
 
     'demo': [
