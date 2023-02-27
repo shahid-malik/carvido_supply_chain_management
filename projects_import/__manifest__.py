@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'QuickBooks Data Import ',
+    'name': 'Carvido Data Import ',
     'version': '0.1',
     'development_status': 'Development',
     'category': '',
     'summary': """
-    This module provide facility to import quickbooks data directly into odoo.
-    Step 1: Export quickbook data
+    This module provide facility to import projects from bitrix24 directly into odoo.
+    Step 1: Export bitrix data
     Step 2: Upload file and select odoo model in which data need to be imported.
     Step 3: Click Import 
     Step 3: Verify data
@@ -42,5 +42,6 @@
         'views/quick_book_inherit.xml',
         'views/account_move_inherit.xml',
         'views/sale_order.xml',
+        'views/website_templates.xml'
     ],
 }

@@ -26,6 +26,6 @@
         <field name="res_model">mediod.csv.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <!--        <field name="view_id" ref="vendor_product_import.wizard_import_csv_form"/>-->
+        <!--        <field name="view_id" ref="projects_import.wizard_import_csv_form"/>-->
     </record>
 </odoo>

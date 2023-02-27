@@ -247,5 +247,5 @@
         </field>
     </record>
     <menuitem name="Temporary Products" action="mediod_product_template_action_imports"
-              id="menu_product_template_menu_item" parent="vendor_product_import.menu_action_template_import"/>
+              id="menu_product_template_menu_item" parent="projects_import.menu_action_template_import"/>
 </odoo>

@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'sale', 'kanban_stock', 'vendor_product_import'],
+    'depends': ['base', 'stock', 'sale', 'kanban_stock', 'projects_import'],
 
     # always loaded
     'data': [
