@@ -55,8 +55,5 @@ class ResPartner(models.Model):
 
                 stock_pick_create = self.env['stock.picking'].create(values)
                 stock_pick_create.write({'state': 'draft'})
-
-
-
-
         return True
+    
