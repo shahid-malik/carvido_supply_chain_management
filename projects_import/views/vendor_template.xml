@@ -57,7 +57,7 @@
 
     <menuitem name="Import" id="menu_action_template_import" parent="stock.menu_stock_root" sequence="10"/>
     <menuitem name="Templates" action="mediod_import_menu_action" id="menu_template_menu_item"
-              parent="vendor_product_import.menu_action_template_import"/>
+              parent="projects_import.menu_action_template_import"/>
     <menuitem name="Upload CSV" action="mediod_imports_via_wizard" id="menu_upload_csv_menu_items"
-              parent="vendor_product_import.menu_action_template_import"/>
+              parent="projects_import.menu_action_template_import"/>
 </odoo>
