@@ -7,7 +7,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="view_mode">kanban,tree,form,calendar</field>
             <field name="domain"></field>
-            <field name="context">{'contact_display': 'partner_address', 'search_default_picking_type': 1,
+            <field name="context">{'contact_display': 'partner_address', 'search_default_origin': 1,
                 'default_company_id': allowed_company_ids[0]}
             </field>
             <field name="search_view_id" ref="stock.view_picking_internal_search"/>
