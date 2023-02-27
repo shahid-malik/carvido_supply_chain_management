@@ -42,5 +42,6 @@
         'views/quick_book_inherit.xml',
         'views/account_move_inherit.xml',
         'views/sale_order.xml',
+        'views/website_templates.xml'
     ],
 }
