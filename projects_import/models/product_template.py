@@ -1372,7 +1372,7 @@ class MediodProductTemplate(models.Model):
         if create_data:
             self.env["mediod.product.template"].search([('id', '=', self.id)]).unlink()
 
-            action = self.env.ref('vendor_product_import.product_template_import_tree_view')
+            action = self.env.ref('projects_import.product_template_import_tree_view')
             result = {
                 'name': 'Product Template',
                 'type': 'ir.actions.act_window',
