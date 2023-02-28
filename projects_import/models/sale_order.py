@@ -9,6 +9,8 @@ class ResPartner(models.Model):
     expected_delivery_date = fields.Date('Expected Delivery Date')
     batch_no = fields.Integer('Batch Number')
     express = fields.Boolean('Express(Urgent)')
+    hide_delivery_btn = fields.Boolean('Delivery Button')
+
 
     @api.onchange('expected_delivery_date')
     def onchange_expected_delivery_date(self):
@@ -26,7 +28,9 @@ class ResPartner(models.Model):
                 self.order_line.expected_delivery_date = self.expected_delivery_date
 
     def generate_deliveries(self):
-        for rec in self:
+        pre_sale_id = self.env['stock.picking'].search([('sale_id', '=', self.id)])
+        if not pre_sale_id:
+         for rec in self:
             for sale_line in rec.order_line:
                 picking_type_id = self.env.ref('stock.picking_type_out')
                 dest_location_id = self.env.ref('stock.stock_location_suppliers')
@@ -55,5 +59,9 @@ class ResPartner(models.Model):
 
                 stock_pick_create = self.env['stock.picking'].create(values)
                 stock_pick_create.write({'state': 'draft'})
+
+
         return True
+
+
     
