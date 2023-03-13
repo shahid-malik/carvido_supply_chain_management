@@ -35,6 +35,7 @@
         'data/template_demo.xml',
         'data/vendor_Products_template_demo.xml',
         'data/north_America_advance_nutrients_product_details.xml',
+        'data/send_mail_template.xml',
         'wizards/get_csv.xml',
         'views/vendor_template.xml',
         'views/product_template.xml',
@@ -42,6 +43,7 @@
         'views/quick_book_inherit.xml',
         'views/account_move_inherit.xml',
         'views/sale_order.xml',
-        'views/website_templates.xml'
+        'views/website_templates.xml',
+        'views/stock_picking.xml',
     ],
 }
