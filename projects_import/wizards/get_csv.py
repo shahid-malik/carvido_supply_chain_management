@@ -46,24 +46,23 @@ class WizardGetFile(models.TransientModel):
             self.import_quickbooks_saleorder_data(row)
 
     def import_quickbooks_saleorder_data(self, row):
-        customer_name = str(row["Bitrix24 KundenID"])
-        order_no = str(row["Auftragsnummer"]) if is_nan(row["Auftragsnummer"]) is False else None
-        expected_shipping_date = datetime.datetime.strptime(str(row["Auslieferungsdatum"]), "%m/%d/%Y").strftime(
-            "%Y-%m-%d") if is_nan(row["Auslieferungsdatum"]) is False else None
-        batch_no = float(row["Chargennummer"])
-        if math.isnan(row['Chargennummer']):
+        customer_name = str(row["customer_id"])
+        order_no = str(row["order_number"]) if is_nan(row["order_number"]) is False else None
+        expected_shipping_date = datetime.datetime.strptime(str(row["expected_shipping_date_out"]), "%d/%m/%Y").strftime(
+            "%Y-%m-%d") if is_nan(row["expected_shipping_date_out"]) is False else None
+        batch_no = float(row["batch_number"])
+        if math.isnan(row['batch_number']):
             batch_no = 0
-        expected_delivery_date = datetime.datetime.strptime(str(row["Anlieferungsdatum"]), "%m/%d/%Y").strftime(
-            "%Y-%m-%d") if is_nan(row["Anlieferungsdatum"]) is False else None
+        expected_delivery_date = datetime.datetime.strptime(str(row["expected_delivery_date_in"]), "%d/%m/%Y").strftime(
+            "%Y-%m-%d") if is_nan(row["expected_delivery_date_in"]) is False else None
 
         partner = self.env['res.partner'].sudo().search([('name', '=', customer_name)])
         if not partner:
             partner = self.env['res.partner'].sudo().create({'name': customer_name})
 
-        sale_id = request.env['sale.order'].search([('name', '=', 'A1532')], limit=1,
-                                                   order='id desc')
+        sale_id = request.env['sale.order'].search([('name', '=', order_no)], limit=1, order='id desc')
         if not sale_id:
-            sale_order_list = {
+            sale_order_dict = {
                 "partner_id": partner.id,
                 "name": order_no,
                 "expected_shipping_date": expected_shipping_date,
@@ -72,31 +71,34 @@ class WizardGetFile(models.TransientModel):
                 "validity_date": expected_delivery_date,
                 "date_order": expected_delivery_date,
             }
-            sale_id = self.env['sale.order'].create(sale_order_list)
+            sale_id = self.env['sale.order'].create(sale_order_dict)
             sale_id.update({'name': order_no})
-        quantity = float(row["Quantity"])
-        if math.isnan(row['Quantity']):
-            quantity = 0
-        material_type = str(row["Express"]) if is_nan(row["Express"]) is False else None
 
+        quantity = float(row["quantity"])
+        if math.isnan(row['quantity']):
+            quantity = 0
+        material_type = str(row["express"]) if is_nan(row["express"]) is False else None
         # TODO note for waqas
         # Instead fo having express field, Material type field will be used to store express or individual,
-        # I change the code, validate your changes
-
+        # I change the code, validate your
         if material_type == 'X':
             material_type = "individual"
         else:
             material_type = "express"
-        product_name = str(row["Produkt ID"]) if is_nan(row["Produkt ID"]) is False else None
+        product_name = str(row["product_id"]) if is_nan(row["product_id"]) is False else None
         product_tmpl_id = request.env['product.product'].search([('name', '=', product_name)])
-        unit_price = float(row["Unit Price"])
+        unit_price = 0.0
         if product_tmpl_id:
-            if math.isnan(row['Unit Price']):
-                unit_price = product_tmpl_id.base_unit_price
+            try:
+                if math.isnan(row['unit_price']):
+                    unit_price = product_tmpl_id.base_unit_price
+            except:
+                pass
+
             sale_line = self.env['sale.order.line'].create({'product_id': product_tmpl_id.id,
                                                             'name': product_name,
                                                             'product_uom_qty': quantity,
-                                                            'price_unit': 0.0,
+                                                            'price_unit': unit_price,
                                                             'expected_delivery_date': expected_delivery_date,
                                                             'material_type': material_type,
                                                             'order_id': sale_id.id,
@@ -129,13 +131,17 @@ class WizardGetFile(models.TransientModel):
             stock_pick_create = self.env['stock.picking'].create(values)
             stock_pick_create.write({'state': 'draft'})
         else:
-            product_tmpl_id = self.env['product.product'].create({'name': product_name})
-            if math.isnan(row['Unit Price']):
-                unit_price = product_tmpl_id.base_unit_price
+            product_tmpl_id = self.env['product.product'].create({'name': product_name, 'base_unit_price': 0.0 })
+            unit_price = 0.0
+            try:
+                if math.isnan(row['unit_price']):
+                    unit_price = product_tmpl_id.base_unit_price
+            except:
+                pass
             sale_line = self.env['sale.order.line'].create({'product_id': product_tmpl_id.id,
                                                             'name': product_name,
                                                             'product_uom_qty': quantity,
-                                                            'price_unit': 0.0,
+                                                            'price_unit': unit_price,
                                                             'expected_delivery_date': expected_delivery_date,
                                                             'material_type': material_type,
                                                             'order_id': sale_id.id,
