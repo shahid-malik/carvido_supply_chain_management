@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "mc_projects",
+    'name': "Carvido Projects Import",
 
     'summary': """
         """,
 
     'description': """
-        Carvido Supply Chain Management
+        Carvido Supply Chain Management module provide facility to import projects from bitrix24 directly into odoo.
+        Manage Projects, Deliveries & Barcode
     """,
 
     'author': "Mediod Consulting",
