@@ -43,12 +43,13 @@ class WizardGetFile(models.TransientModel):
 
         df = pd.read_csv(file_name, error_bad_lines=False)
         for date, row in df.T.items():
-            self.import_quickbooks_saleorder_data(row)
+            self.import_saleorder_data(row)
 
-    def import_quickbooks_saleorder_data(self, row):
+    def import_saleorder_data(self, row):
         customer_name = str(row["customer_id"])
         order_no = str(row["order_number"]) if is_nan(row["order_number"]) is False else None
-        expected_shipping_date = datetime.datetime.strptime(str(row["expected_shipping_date_out"]), "%d/%m/%Y").strftime(
+        expected_shipping_date = datetime.datetime.strptime(str(row["expected_shipping_date_out"]),
+                                                            "%d/%m/%Y").strftime(
             "%Y-%m-%d") if is_nan(row["expected_shipping_date_out"]) is False else None
         batch_no = float(row["batch_number"])
         if math.isnan(row['batch_number']):
@@ -131,7 +132,7 @@ class WizardGetFile(models.TransientModel):
             stock_pick_create = self.env['stock.picking'].create(values)
             stock_pick_create.write({'state': 'draft'})
         else:
-            product_tmpl_id = self.env['product.product'].create({'name': product_name, 'base_unit_price': 0.0 })
+            product_tmpl_id = self.env['product.product'].create({'name': product_name, 'base_unit_price': 0.0})
             unit_price = 0.0
             try:
                 if math.isnan(row['unit_price']):
@@ -168,6 +169,7 @@ class WizardGetFile(models.TransientModel):
                     'material_type': sale_line.material_type,
                     'location_dest_id': dest_location_id.id,
                     'location_id': location_id.id,
+                    'product_uom': self.env['uom.uom'].search([('name', '=', 'Units')], limit=1).id,
                 }))]
             }
 
